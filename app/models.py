@@ -17,6 +17,7 @@ class User(UserMixin, db.Model):
     pass_secure = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
+    blogpost = db.relationship('BlogPost', backref='user', lazy='dynamic')
 
     @password.setter
     def password(self, password):
@@ -44,3 +45,15 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f'BlogPost {self.description}' 
+
+
+class Comment(db.Model):
+
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key = True)
+    blogpost_id = db.Column(db.Integer, db.ForeignKey('blogposts.id'), nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+    description = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'Comment: id: {self.id} comment: {self.description}' 
