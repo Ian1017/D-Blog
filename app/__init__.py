@@ -26,21 +26,3 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
    
     return app
-
-
-
-class BlogPost(db.Model):
-
-    __tablename__ = 'blogposts'
-    id = db.Column(db.Integer, primary_key = True)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
-    description = db.Column(db.String(), index = True)
-    title = db.Column(db.String())
-
-    @classmethod
-    def get_blogposts(cls, id):
-        blogposts = BlogPost.query.order_by(blogpost_id=id).desc().all()
-        return blogposts
-
-    def __repr__(self):
-        return f'BlogPost {self.description}' 
