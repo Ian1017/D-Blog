@@ -37,7 +37,8 @@ class User(UserMixin, db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
     description = db.Column(db.String(), index = True)
     title = db.Column(db.String())
-
+    comments = db.relationship('Comment', backref='blogpost', lazy = 'dynamic')
+    
     @classmethod
     def get_blogposts(cls, id):
         blogposts = BlogPost.query.order_by(blogpost_id=id).desc().all()
