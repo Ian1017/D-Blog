@@ -1,8 +1,7 @@
 from flask import Flask
-from config import config_options
-from flask_fontawesome import FontAwesome
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from config import config_options
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 
 # Instances of flask extesnions
@@ -25,13 +24,13 @@ def create_app(config_name):
     # Initializing application
     app = Flask(__name__)
 
-    #creating the app configuration
+    # creating the app configuration
     app.config.from_object(config_options[config_name])
 
     # Configure Uploadset
     configure_uploads(app, photos)
 
-    #Initialize flask extensions
+    # Initialize flask extensions
     db.init_app(app)
     login_manager.init_app(app)
     fa.init_app(app)
@@ -42,6 +41,6 @@ def create_app(config_name):
 
     # Registering the auth blueprint
     from .auth import auth as auth_blueprint
-    app.register_blueprint(auth, url_prefix='/auth')
-    
+    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+
     return app

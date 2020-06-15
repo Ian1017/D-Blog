@@ -3,6 +3,7 @@ from sqlalchemy.sql import func
 from . import login_manager
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy.schema import CreateTable
 
 
 @login_manager.user_loader
@@ -37,11 +38,12 @@ class User(UserMixin, db.Model):
 
 
 class BlogPost(db.Model):
-    __tablename__ = 'blogposts'
+    __tablename__ = 'blogs'
     id = db.Column(db.Integer, primary_key=True)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     description = db.Column(db.String(), index=True)
     title = db.Column(db.String())
+    date_posted = db.Column(db.DateTime)
     comments = db.relationship('Comment', backref='blogpost', lazy='dynamic')
 
     @classmethod
