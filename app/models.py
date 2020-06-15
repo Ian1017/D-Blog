@@ -1,5 +1,5 @@
 from . import db
-from sqlachemy.sql import func
+from sqlalchemy.sql import func
 from . import login_manager
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -18,6 +18,10 @@ class User(UserMixin, db.Model):
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
     blogpost = db.relationship('BlogPost', backref='user', lazy='dynamic')
+
+    @property
+    def password(self):
+        raise AttributeError('You cannot read the password attribute')
 
     @password.setter
     def password(self, password):
@@ -38,7 +42,7 @@ class User(UserMixin, db.Model):
     description = db.Column(db.String(), index = True)
     title = db.Column(db.String())
     comments = db.relationship('Comment', backref='blogpost', lazy = 'dynamic')
-    
+
     @classmethod
     def get_blogposts(cls, id):
         blogposts = BlogPost.query.order_by(blogpost_id=id).desc().all()
