@@ -17,3 +17,10 @@ def about():
     View about page function that returns the about page
     '''
     return render_template('about.html')
+
+@main.route('/contact')
+def contact():
+    '''
+    View function that returns the contact page
+    '''
+    return render_template('contact.html') 
