@@ -10,3 +10,10 @@ def index():
     intro = "Welcome to my journey"
 
     return render_template('index.html, title = title, intro = intro')
+
+@main.route('/about')
+def about():
+    '''
+    View about page function that returns the about page
+    '''
+    return render_template('about.html')
